@@ -66,7 +66,9 @@ const PostWidget = ({
 
   const patchComment = async () => {
     const userName = user.firstName + " " + user.lastName;
-
+    if (!comment.trim()){
+      return;
+    }
     const response = await CommentPost(comment, userName, postId);
 
     if (response.data) {
@@ -125,7 +127,8 @@ const PostWidget = ({
                       onChange={(e) => setComment(e.target.value)}
                       InputProps={{
                         endAdornment: (
-                          <Button variant="outlined" onClick={patchComment}>
+                          <Button
+                          variant="outlined" onClick={patchComment}>
                             Comment
                           </Button>
                         ),

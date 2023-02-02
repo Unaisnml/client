@@ -41,6 +41,9 @@ const MyPostWidget = ({ picturePath }) => {
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
+    // if (!post.trim()) {
+    //   return;
+    // }
     if (image) {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
@@ -143,7 +146,7 @@ const MyPostWidget = ({ picturePath }) => {
           </FlexBetween>
         )}
         <Button
-          disabled={!post}
+          disabled={!post || !post.trim()}
           onClick={handlePost}
           sx={{
             color: palette.background.alt,

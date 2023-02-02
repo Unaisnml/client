@@ -57,6 +57,9 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
 
   const handleSend = async (event) => {
     event.preventDefault();
+    if (!newMessage.trim()) {
+      return;
+    }
     if (newMessage === "") {
       return console.log("empty message");
     }
