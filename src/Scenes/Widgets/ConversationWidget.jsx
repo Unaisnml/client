@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUserProfile } from "Api/UserRequest";
@@ -5,6 +6,7 @@ import { getUserProfile } from "Api/UserRequest";
 const ConversationWidget = ({ data, currentUserId, online }) => {
   const [userData, setUserData] = useState(null);
   const token = useSelector((state) => state.token);
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   useEffect(() => {
     const userId = data.members.find((id) => id !== currentUserId);
@@ -18,7 +20,7 @@ const ConversationWidget = ({ data, currentUserId, online }) => {
         console.log(error);
       }
     };
-    getUserData();
+    userId && getUserData();
   }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -41,10 +43,12 @@ const ConversationWidget = ({ data, currentUserId, online }) => {
             }}
           />
           <div className="name" style={{ fontSize: "0.8rem" }}>
-            <span>
-              {userData ? userData.firstName : ""}{" "}
-              {userData ? userData.lastName : ""}
-            </span>
+            {isNonMobileScreens ? (
+              <span>
+                {userData ? userData.firstName : ""}{" "}
+                {userData ? userData.lastName : ""}
+              </span>
+            ) : null}
             <br />
             <span style={{ color: online ? "#51e200" : "" }}>
               {online ? "Online" : "Offline"}

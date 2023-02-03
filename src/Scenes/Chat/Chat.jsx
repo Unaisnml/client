@@ -10,14 +10,12 @@ import { userChats } from "Api/ChatRequest";
 
 const Chat = () => {
   const user = useSelector((state) => state.user);
-  console.log(user);
   const token = useSelector((state) => state.token);
 
-  const socket = useRef();
-
-  const [onlineUsers, setOnlineUsers] = useState([]);
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const socket = useRef();
   const [sendMessage, setSendMessage] = useState(null);
   const [receivedMessage, setReceivedMessage] = useState(null);
 
@@ -25,11 +23,12 @@ const Chat = () => {
   useEffect(() => {
     if (sendMessage !== null) {
       socket.current.emit("send-message", sendMessage);
+      console.log(sendMessage,"message sent");
     }
   }, [sendMessage]);
 
   useEffect(() => {
-    socket.current = io(`ws://${process.env.REACT_APP_BASE_URL}`);
+    socket.current = io(`http://localhost:8800`);
     socket.current.emit("new-user-add", user._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
@@ -39,8 +38,8 @@ const Chat = () => {
 
   //Receive messages from socket server
   useEffect(() => {
-    socket.current.on("receive-message", (data) => {
-      console.log(data);
+    socket.current.on("recieve-message", (data) => {
+      console.log(data,'receive message');
       setReceivedMessage(data);
     });
   }, []);

@@ -11,8 +11,8 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const scroll = useRef();
   const token = useSelector((state) => state.token);
+  const scroll = useRef();
 
   const handleChange = (e) => {
     setNewMessage(e.target.value);
@@ -98,6 +98,11 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
       setMessages([...messages, receivedMessage]);
     }
   }, [receivedMessage]); //eslint-disable-line react-hooks/exhaustive-deps
+
+  // Always scroll to last Message
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <>
