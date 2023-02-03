@@ -194,6 +194,7 @@ const Userwidget = ({ userId, picturePath }) => {
                 name="firstName"
               >
                 <Input
+                  type="text"
                   placeholder={currentUserId.firstName}
                   defaultValue={currentUserId.firstName}
                 />
@@ -204,6 +205,7 @@ const Userwidget = ({ userId, picturePath }) => {
                 name="lastName"
               >
                 <Input
+                  type="text"
                   placeholder={currentUserId.lastName}
                   defaultValue={currentUserId.lastName}
                 />
@@ -214,6 +216,7 @@ const Userwidget = ({ userId, picturePath }) => {
                 name="location"
               >
                 <Input
+                  type="text"
                   placeholder={currentUserId.location}
                   defaultValue={currentUserId.location}
                 />
@@ -224,6 +227,7 @@ const Userwidget = ({ userId, picturePath }) => {
                 name="occupation"
               >
                 <Input
+                  type="text"
                   placeholder={currentUserId.occupation}
                   defaultValue={currentUserId.occupation}
                 />
