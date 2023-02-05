@@ -35,6 +35,9 @@ const Userwidget = ({ userId, picturePath }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [form] = Form.useForm();
+  const [formValue, setFormValue] = useState("");
+
   useEffect(() => {
     if (userId === currentUserId._id) {
       setIsCurrentUser(true);
@@ -67,6 +70,15 @@ const Userwidget = ({ userId, picturePath }) => {
     p: 4,
   };
 
+  const validateText = (value) => {
+    const pattern = /^[a-zA-Z]+$/;
+    if (!pattern.test(value)) {
+      return Promise.reject("Only letters are allowed");
+    }
+    setFormValue(value);
+    return Promise.resolve();
+  };
+
   const onFinish = async (values) => {
     try {
       const response = await editUser(currentUserId._id, values);
@@ -94,9 +106,10 @@ const Userwidget = ({ userId, picturePath }) => {
     });
 
     if (response.data) {
-      const data = response.data;
-      setUser(data);
+      // const data = response.data;
+      setUser(response.data);
     }
+  console.log(response.data);
   };
   useEffect(() => {
     getUser();
@@ -188,10 +201,15 @@ const Userwidget = ({ userId, picturePath }) => {
             Edit Profile
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical" form={form} onFinish={onFinish}>
               <Form.Item
                 label={<label style={{ color: "white" }}>First Name</label>}
                 name="firstName"
+                rules={[
+                  {
+                    validator: validateText,
+                  },
+                ]}
               >
                 <Input
                   type="text"
@@ -203,6 +221,11 @@ const Userwidget = ({ userId, picturePath }) => {
               <Form.Item
                 label={<label style={{ color: "white" }}>Last Name</label>}
                 name="lastName"
+                rules={[
+                  {
+                    validator: validateText,
+                  },
+                ]}
               >
                 <Input
                   type="text"
@@ -214,6 +237,11 @@ const Userwidget = ({ userId, picturePath }) => {
               <Form.Item
                 label={<label style={{ color: "white" }}>Location</label>}
                 name="location"
+                rules={[
+                  {
+                    validator: validateText,
+                  },
+                ]}
               >
                 <Input
                   type="text"
@@ -225,6 +253,11 @@ const Userwidget = ({ userId, picturePath }) => {
               <Form.Item
                 label={<label style={{ color: "white" }}>Occupation</label>}
                 name="occupation"
+                rules={[
+                  {
+                    validator: validateText,
+                  },
+                ]}
               >
                 <Input
                   type="text"

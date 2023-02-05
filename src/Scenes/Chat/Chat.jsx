@@ -29,6 +29,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.current = io(`https://socket.cathchat.online`);
+    // socket.current = io(`http://localhost:8800`);
     socket.current.emit("new-user-add", user._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
@@ -39,7 +40,7 @@ const Chat = () => {
   //Receive messages from socket server
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
-      console.log(data,'receive message');
+      console.log(data,'recieve-message');
       setReceivedMessage(data);
     });
   }, []);

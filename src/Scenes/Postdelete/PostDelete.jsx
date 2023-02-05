@@ -39,8 +39,8 @@ const PostDelete = ({ setLoading, postUserId, postId }) => {
       <IconButton
         aria-label="more"
         id="long-button"
-        aria-controls={open ? "long-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
+        aria-controls={open ? "long-menu" : null}
+        aria-expanded={open ? "true" : null}
         onClick={handleClick}
       >
         <MoreVertIcon />
@@ -79,7 +79,7 @@ const PostDelete = ({ setLoading, postUserId, postId }) => {
             you want to delete this post
           </Alert>
         ) : (
-          ""
+          null
         )}
       </Menu>
     </div>
