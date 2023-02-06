@@ -64,7 +64,9 @@ const PostWidget = ({
     }
   };
 
-  const patchComment = async () => {
+  const patchComment = async (event) => {
+    event.preventDefault();
+    setComment('');
     const userName = user.firstName + " " + user.lastName;
     if (!comment.trim()){
       return;
@@ -121,13 +123,15 @@ const PostWidget = ({
                 {isComments && (
                   <FlexBetween gap="1.5rem">
                     <TextField
+                    value={comment}
                       id="outlined-name"
-                      placeholder="Write a comment here"
+                      label="Add Comment"
                       required
-                      onChange={(e) => setComment(e.target.value)}
+                      onChange={(event) => setComment(event.target.value)}
                       InputProps={{
                         endAdornment: (
                           <Button
+                          type="submit"
                           variant="outlined" onClick={patchComment}>
                             Comment
                           </Button>

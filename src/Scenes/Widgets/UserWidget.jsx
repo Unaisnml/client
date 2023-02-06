@@ -35,9 +35,6 @@ const Userwidget = ({ userId, picturePath }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [form] = Form.useForm();
-  const [formValue, setFormValue] = useState("");
-
   useEffect(() => {
     if (userId === currentUserId._id) {
       setIsCurrentUser(true);
@@ -70,19 +67,9 @@ const Userwidget = ({ userId, picturePath }) => {
     p: 4,
   };
 
-  const validateText = (value) => {
-    const pattern = /^[a-zA-Z]+$/;
-    if (!pattern.test(value)) {
-      return Promise.reject("Only letters are allowed");
-    }
-    setFormValue(value);
-    return Promise.resolve();
-  };
-
   const onFinish = async (values) => {
     try {
       const response = await editUser(currentUserId._id, values);
-
       if (response.data.success) {
         dispatch(
           setLogin({
@@ -106,10 +93,9 @@ const Userwidget = ({ userId, picturePath }) => {
     });
 
     if (response.data) {
-      // const data = response.data;
-      setUser(response.data);
+      const data = response.data;
+      setUser(data);
     }
-  console.log(response.data);
   };
   useEffect(() => {
     getUser();
@@ -201,18 +187,25 @@ const Userwidget = ({ userId, picturePath }) => {
             Edit Profile
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <Form layout="vertical" form={form} onFinish={onFinish}>
+            <Form layout="vertical" onFinish={onFinish}>
               <Form.Item
                 label={<label style={{ color: "white" }}>First Name</label>}
                 name="firstName"
                 rules={[
                   {
-                    validator: validateText,
+                    required: true,
+                    message: "Please input your First Name!",
+                  },
+                  {
+                    pattern: /^[A-Za-z]+$/,
+                    message:
+                      "This field should not contain numbers, symbols, or spaces!",
                   },
                 ]}
               >
                 <Input
                   type="text"
+                  value={currentUserId.firstName}
                   placeholder={currentUserId.firstName}
                   defaultValue={currentUserId.firstName}
                 />
@@ -223,7 +216,9 @@ const Userwidget = ({ userId, picturePath }) => {
                 name="lastName"
                 rules={[
                   {
-                    validator: validateText,
+                    pattern: /^[A-Za-z]+$/,
+                    message:
+                      "This field should not contain numbers, symbols, or spaces!",
                   },
                 ]}
               >
@@ -239,7 +234,9 @@ const Userwidget = ({ userId, picturePath }) => {
                 name="location"
                 rules={[
                   {
-                    validator: validateText,
+                    pattern: /^[A-Za-z]+$/,
+                    message:
+                      "This field should not contain numbers, symbols, or spaces!",
                   },
                 ]}
               >
@@ -255,7 +252,9 @@ const Userwidget = ({ userId, picturePath }) => {
                 name="occupation"
                 rules={[
                   {
-                    validator: validateText,
+                    pattern: /^[A-Za-z]+$/,
+                    message:
+                      "This field should not contain numbers, symbols, or spaces!",
                   },
                 ]}
               >
@@ -273,9 +272,22 @@ const Userwidget = ({ userId, picturePath }) => {
               >
                 <Input />
               </Form.Item>
-
-              <div className="d-flex flex-column">
-                <Button htmlType="submit">Submit</Button>
+              <div className="d-flex flex-row">
+                <Button
+                  style={{ background: "green" }}
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Submit
+                </Button>
+                <Button
+                  style={{ background: "red", marginLeft: 2 }}
+                  type="primary"
+                  htmlType="submit"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
               </div>
             </Form>
           </Typography>
