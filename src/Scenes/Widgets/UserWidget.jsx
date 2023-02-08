@@ -71,7 +71,6 @@ const Userwidget = ({ userId, picturePath }) => {
     try {
       const response = await editUser(currentUserId._id, values);
       if (response.data.success) {
-        console.log(response.data, "hellloooo");
         dispatch(
           setLogin({
             user: response.data.user,
@@ -80,7 +79,6 @@ const Userwidget = ({ userId, picturePath }) => {
           setUser(response.data.user),
           handleClose()
         );
-        console.log("jdsjshjk111");
       } else {
         console.log("No response");
       }

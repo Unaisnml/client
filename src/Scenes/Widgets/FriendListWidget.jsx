@@ -14,7 +14,6 @@ const FriendListWidget = ({ userId }) => {
   const token = useSelector((state) => state.token);
   const user = useSelector((state) => state.user);
   const friends = useSelector((state) => state.user.friends);
-// const [friendList, isFriendList] = useState('');
   const getFriends = async () => {
     const response = await getFriendList(userId, {
       headers: { Authorization: `Bearer ${token}` },
@@ -26,8 +25,8 @@ const FriendListWidget = ({ userId }) => {
   
   useEffect(() => {
     getFriends();
-  }, []); //eslint-disable-line react-hooks/exhaustive-deps
-  console.log(user,"user")
+  }, [user]); //eslint-disable-line react-hooks/exhaustive-deps
+  // console.log(user,"user")
 
   return (
     <WidgetWrapper sx={{ position: "sticky", top: "0" }}>
